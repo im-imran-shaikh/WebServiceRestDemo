@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dto.StudentDetails;
+import com.dto.StudentDetail;
 
 public class DatabaseConnection
 {
@@ -23,7 +23,7 @@ public class DatabaseConnection
 	private String studentSQL = "select * from studentdetails";
 	private String addStudent = "insert into studentdetails(Student_Name,Student_Address) values(?,?)";
 	
-	StudentDetails studentDetails = new StudentDetails();
+	
 	
 	private Connection databaseConnection()
 	{
@@ -69,13 +69,13 @@ public class DatabaseConnection
 			}
 	}
 	
-	public List<StudentDetails> getAllStudent()
+	public List<StudentDetail> getAllStudent()
 	{
 		int rollNo;
 		String studentName;
 		String studentAddress;
 		
-		List<StudentDetails> studentDetailsList = new ArrayList<>();
+		List<StudentDetail> studentDetailsList = new ArrayList<>();
 		
 		try
 		{
@@ -89,6 +89,7 @@ public class DatabaseConnection
 				rollNo = resultSet.getInt("Roll_No");
 				studentName = resultSet.getString("student_Name");
 				studentAddress =  resultSet.getString("student_Address");
+				StudentDetail studentDetails = new StudentDetail();
 				studentDetails.setRollNo(rollNo);
 				studentDetails.setStudentName(studentName);
 				studentDetails.setStudentAddress(studentAddress);

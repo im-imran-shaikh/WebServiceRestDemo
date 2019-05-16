@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.dao.DatabaseConnection;
-import com.dto.StudentDetails;
+import com.dto.StudentDetail;
 
 @Path("/student")
 public class StudentImpl implements Student
@@ -21,7 +21,7 @@ public class StudentImpl implements Student
 	@Path("/getAllStudent")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	@Override
-	public List<StudentDetails> getAllStudent()
+	public List<StudentDetail> getAllStudent()
 	{
 		return databaseConnection.getAllStudent();
 	}
@@ -30,7 +30,7 @@ public class StudentImpl implements Student
 	@Path("/addStudent")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Override
-	public void addStudent(StudentDetails studentDetails)
+	public void addStudent(StudentDetail studentDetails)
 	{
 		String studentName = studentDetails.getStudentName();
 		String studentAddress = studentDetails.getStudentAddress();

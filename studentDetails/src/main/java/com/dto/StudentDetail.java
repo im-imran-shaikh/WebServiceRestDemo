@@ -2,8 +2,8 @@ package com.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "StudentDetails")
-public class StudentDetails
+@XmlRootElement(name = "StudentDetail")
+public class StudentDetail
 {
 	private int rollNo;
 	private String studentName;
