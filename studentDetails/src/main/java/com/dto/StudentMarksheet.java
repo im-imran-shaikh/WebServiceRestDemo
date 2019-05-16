@@ -1,5 +1,8 @@
 package com.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "StudentMarksheet")
 public class StudentMarksheet
 {
 	private int rollNo;

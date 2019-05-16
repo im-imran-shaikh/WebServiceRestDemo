@@ -22,8 +22,9 @@ public class DatabaseConnection
 	
 	private String studentSQL = "select * from studentdetails";
 	private String addStudent = "insert into studentdetails(Student_Name,Student_Address) values(?,?)";
-	
-	
+	private String addStudentMarksheet = "insert into studentmarksheet(History,Geography,Math) values(?,?,?)";
+	private String deleteStudent = "Delete  from studentdetails where Roll_No = ?";
+	private String deleteStudentMarksheet = "Delete from studentmarksheet where Roll_No = ?";
 	
 	private Connection databaseConnection()
 	{
@@ -132,6 +133,51 @@ public class DatabaseConnection
 			closeStatement();
 			closeConnection();
 		}	
+	}
+	
+	public void addStudentMarksheet(int history ,int geography, int math)
+	{
+		connection = databaseConnection();
+		try
+		{
+			statement = connection.prepareStatement(addStudentMarksheet);
+			statement.setInt(1,history);
+			statement.setInt(2,geography);
+			statement.setInt(3, math);
+			statement.executeUpdate();
+			System.out.print("Marksheet is updated ");
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeStatement();
+			closeConnection();
+		}	
+	}
+	
+	public void deleteStudent(int rollNo)
+	{
+		connection = databaseConnection();
+		try
+		{
+			statement = connection.prepareStatement(deleteStudent);
+			statement.setInt(1, rollNo);
+			statement.executeUpdate();
+			System.out.println("student " + rollNo + " is deleted");
+			
+			statement = connection.prepareStatement(deleteStudentMarksheet);
+			statement.setInt(1, rollNo);
+			statement.executeUpdate();
+			System.out.println("student marksheet " + rollNo + " is deleted");
+			
+		} catch (SQLException e)
+		{
+			
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public static void main(String args[])
