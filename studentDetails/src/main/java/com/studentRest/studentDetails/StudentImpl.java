@@ -72,10 +72,4 @@ public class StudentImpl implements Student
 		return databaseConnection.getStudentMarksheet();	
 	}
 	
-	
-
-	
-
-	
-	
 }
