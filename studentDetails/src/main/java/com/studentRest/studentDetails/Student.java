@@ -12,5 +12,6 @@ public interface Student
 	public void addStudent(StudentDetail studentDetails);
 	public void addStudentMarksheet(StudentMarksheet studentMarksheet);
 	public void deleteStudent(StudentDetail studentDetail);
+	public void updateStudent(StudentDetail studentDetail);
 	
 }

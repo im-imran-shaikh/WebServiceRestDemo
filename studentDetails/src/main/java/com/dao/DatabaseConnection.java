@@ -27,6 +27,7 @@ public class DatabaseConnection
 	private String addStudentMarksheet = "insert into studentmarksheet(History,Geography,Math) values(?,?,?)";
 	private String deleteStudent = "Delete  from studentdetails where Roll_No = ?";
 	private String deleteStudentMarksheet = "Delete from studentmarksheet where Roll_No = ?";
+	private String updateStudent = "update studentDetails set Student_Name = ? , Student_Address = ? where Roll_No = ?";
 	
 	private Connection databaseConnection()
 	{
@@ -54,7 +55,6 @@ public class DatabaseConnection
 				connection.close();
 			} catch (SQLException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}
@@ -67,7 +67,6 @@ public class DatabaseConnection
 				statement.close();
 			} catch (SQLException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}
@@ -225,4 +224,25 @@ public class DatabaseConnection
 		
 	}
 	
+	public void updateStudent(String studentName, String studentAddress,int rollNo)
+	{
+		connection = databaseConnection();
+		try
+		{
+			statement = connection.prepareStatement(updateStudent);
+			statement.setString(1, studentName);
+			statement.setString(2, studentAddress);
+			statement.setInt(3, rollNo);
+			statement.executeUpdate();
+			System.out.println(rollNo + " is updated");
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			closeStatement();
+			closeConnection();
+		}
+	}
 }

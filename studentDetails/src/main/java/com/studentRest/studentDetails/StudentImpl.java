@@ -1,11 +1,13 @@
 package com.studentRest.studentDetails;
 
+import java.lang.annotation.Repeatable;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -21,7 +23,7 @@ public class StudentImpl implements Student
 
 	@GET
 	@Path("/getAllStudent")
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Produces( { MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML } )
 	@Override
 	public List<StudentDetail> getAllStudent()
 	{
@@ -70,6 +72,18 @@ public class StudentImpl implements Student
 	public List<StudentMarksheet> getAllStudentMarsheet()
 	{	
 		return databaseConnection.getStudentMarksheet();	
+	}
+
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/UpdateStudent")
+	@Override
+	public void updateStudent(StudentDetail studentDetail)
+	{
+		String studentName = studentDetail.getStudentName();
+		String studentAddress = studentDetail.getStudentAddress();
+		int rollNo = studentDetail.getRollNo(); 
+		databaseConnection.updateStudent(studentName, studentAddress, rollNo);
 	}
 	
 }
