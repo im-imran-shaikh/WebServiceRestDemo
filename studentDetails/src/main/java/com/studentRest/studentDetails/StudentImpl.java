@@ -62,6 +62,15 @@ public class StudentImpl implements Student
 		int rollNo = studentDetail.getRollNo();
 		databaseConnection.deleteStudent(rollNo);	
 	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_XML)
+	@Path("/getStudentMarksheet")
+	@Override
+	public List<StudentMarksheet> getAllStudentMarsheet()
+	{	
+		return databaseConnection.getStudentMarksheet();	
+	}
 	
 	
 

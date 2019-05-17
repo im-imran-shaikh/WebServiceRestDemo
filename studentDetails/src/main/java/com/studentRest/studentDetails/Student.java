@@ -8,7 +8,9 @@ import com.dto.StudentMarksheet;
 public interface Student
 {
 	public List<StudentDetail> getAllStudent();
+	public List<StudentMarksheet> getAllStudentMarsheet();
 	public void addStudent(StudentDetail studentDetails);
 	public void addStudentMarksheet(StudentMarksheet studentMarksheet);
 	public void deleteStudent(StudentDetail studentDetail);
+	
 }

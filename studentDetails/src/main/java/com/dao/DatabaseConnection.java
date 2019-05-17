@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dto.StudentDetail;
+import com.dto.StudentMarksheet;
 
 public class DatabaseConnection
 {
@@ -21,6 +22,7 @@ public class DatabaseConnection
 	private PreparedStatement statement;
 	
 	private String studentSQL = "select * from studentdetails";
+	private String studentMarksheet = "select * from studentmarksheet";
 	private String addStudent = "insert into studentdetails(Student_Name,Student_Address) values(?,?)";
 	private String addStudentMarksheet = "insert into studentmarksheet(History,Geography,Math) values(?,?,?)";
 	private String deleteStudent = "Delete  from studentdetails where Roll_No = ?";
@@ -79,9 +81,7 @@ public class DatabaseConnection
 		List<StudentDetail> studentDetailsList = new ArrayList<>();
 		
 		try
-		{
-			
-			
+		{	
 			connection = databaseConnection();
 			statement = connection.prepareStatement(studentSQL);
 			ResultSet resultSet = statement.executeQuery();
@@ -91,10 +91,10 @@ public class DatabaseConnection
 				studentName = resultSet.getString("student_Name");
 				studentAddress =  resultSet.getString("student_Address");
 				StudentDetail studentDetails = new StudentDetail();
+				
 				studentDetails.setRollNo(rollNo);
 				studentDetails.setStudentName(studentName);
 				studentDetails.setStudentAddress(studentAddress);
-				
 				System.out.println(rollNo + " " + studentName + " " + studentAddress);
 				
 				studentDetailsList.add(studentDetails);
@@ -112,6 +112,52 @@ public class DatabaseConnection
 		}
 		
 		return studentDetailsList;
+	}
+	
+	public List<StudentMarksheet> getStudentMarksheet()
+	{
+		int rollNo;
+		int history;
+		int geography;
+		int math;
+		
+		List<StudentMarksheet> studentMarksheetList = new ArrayList<>();
+		
+		try
+		{	
+			connection = databaseConnection();
+			statement = connection.prepareStatement(studentMarksheet);
+			ResultSet resultSet = statement.executeQuery();
+			while ( resultSet.next() )
+			{
+				rollNo = resultSet.getInt("Roll_No");
+				history = resultSet.getInt("history");
+				geography =  resultSet.getInt("geography");
+				math = resultSet.getInt("math");
+				StudentMarksheet studentMarksheet = new StudentMarksheet();
+				
+				studentMarksheet.setRollNo(rollNo);
+				studentMarksheet.setHistory(history);
+				studentMarksheet.setGeography(geography);
+				studentMarksheet.setMath(math);
+				
+				System.out.println(rollNo + " " + history + " " + geography + " " + math);
+				
+				studentMarksheetList.add(studentMarksheet);
+			}
+			
+			
+		} catch (SQLException e)
+		{
+			System.out.println("Unable to create a statement " );
+		}
+		finally
+		{
+			closeStatement();
+			closeConnection();
+		}
+		
+		return studentMarksheetList;
 	}
 	
 	public void addStudent(String studentName ,String studentAddress)
@@ -165,24 +211,18 @@ public class DatabaseConnection
 			statement = connection.prepareStatement(deleteStudent);
 			statement.setInt(1, rollNo);
 			statement.executeUpdate();
-			System.out.println("student " + rollNo + " is deleted");
+			System.out.println("Roll No " + rollNo + " is deleted");
 			
 			statement = connection.prepareStatement(deleteStudentMarksheet);
 			statement.setInt(1, rollNo);
 			statement.executeUpdate();
-			System.out.println("student marksheet " + rollNo + " is deleted");
+			System.out.println("student marksheet of roll no " + rollNo + " is deleted");
 			
 		} catch (SQLException e)
-		{
-			
+		{	
 			e.printStackTrace();
 		}
 		
 	}
 	
-	public static void main(String args[])
-	{
-		DatabaseConnection connection = new DatabaseConnection();
-		connection.getAllStudent();
-	}
 }
